@@ -1,10 +1,14 @@
+from machine import Pin, I2C, Timer
 import time
 import utime
 import socket
 import network
+import bme280
 from secrets import secrets
 import gc
-from machine import Timer
+
+i2c=I2C(0,sda=Pin(0), scl=Pin(1), freq=400000)
+bme = bme280.BME280(i2c=i2c)
 
 timeInit = time.time()
 
@@ -87,6 +91,38 @@ while True:
             file_header = 'HTTP/1.1 200 OK\r\nContent-Type: image/jpg\r\n\r\n'
         elif '.ico' in request:
             file_header = 'HTTP/1.1 200 OK\r\nContent-Type: image/x-icon\r\n\r\n'
+        elif request == '/altitude':
+            file_header = 'HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n'
+            pressure_int = bme.values[1]
+            pressure_int = pressure_int[:-3]
+            response = "{:.2f}".format(44330 * (1 - (float(pressure_int)/1013.25)**(1/5.255) ) * 3.281) + 'ft'
+            cl.send(file_header)
+            cl.send(response)
+        elif request == '/pressure':
+            file_header = 'HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n'
+            response = str(bme.values[1])
+            cl.send(file_header)
+            cl.send(response)
+        elif request == '/temperature':
+            file_header = 'HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n'
+            temp = str(bme.values[0])
+            temp = temp[:-1]
+            fahrenheit = (float(temp) * 1.8) + 32
+            response = str(fahrenheit) + "°F"
+            cl.send(file_header)
+            cl.send(response)
+        elif request == '/temperature_celsius':
+            file_header = 'HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n'
+            temp = str(bme.values[0])
+            temp = temp[:-1]
+            response = str(temp) + "°C"
+            cl.send(file_header)
+            cl.send(response)
+        elif request == '/humidity':
+            file_header = 'HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n'
+            response = str(bme.values[2])
+            cl.send(file_header)
+            cl.send(response)
         elif request == '/visitors':
             file_header = 'HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n'
             response = str(visitors)

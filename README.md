@@ -13,5 +13,9 @@ A website hosted on a Raspberry Pi Pico W.
 ``bmp280`` - Code for the Pico with the BME280 module for altitude and temperature readings
 
 
+## External Libraries
+- micropython_bme280
+
+
 ## Contribute
 I welcome contributions to this project; please feel free to contribute to this repository by providing documentation to code, submitting issue reports, enhancement requests and pull requests.
