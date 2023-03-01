@@ -8,6 +8,8 @@ import gc
 
 gc.collect()
 
+led = Pin("LED", Pin.OUT)
+led.on()
 
 timeInit = time.time()
 
