@@ -12,6 +12,9 @@ gc.collect()
 i2c=I2C(0,sda=Pin(0), scl=Pin(1), freq=400000)
 bme = bme280.BME280(i2c=i2c)
 
+led = Pin("LED", Pin.OUT)
+led.on()
+
 timeInit = time.time()
 
 ssid = secrets['ssid']
