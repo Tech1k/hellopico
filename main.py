@@ -5,12 +5,18 @@ import usocket as socket
 import network
 import bme280
 from secrets import secrets
+import ssd1306
 import gc
+import _thread
 
 gc.collect()
 
 i2c=I2C(0,sda=Pin(0), scl=Pin(1), freq=400000)
 bme = bme280.BME280(i2c=i2c)
+display = ssd1306.SSD1306_I2C(128, 64, i2c)
+
+led = Pin("LED", Pin.OUT)
+led.on()
 
 timeInit = time.time()
 
@@ -51,6 +57,23 @@ s.bind(('0.0.0.0', 80))
 s.listen(100)
 
 print('listening on', addr)
+
+
+def update_oled():
+    while True:
+        display.fill(0)
+        display.text("HelloPico.net", 0, 0)
+        temp = str(bme.values[0])
+        temp = temp[:-1]
+        temp = "{:.0f}".format((float(temp) * 1.8) + 32)
+        temp = str(temp) + " *F"
+        display.text("Temp: " + temp, 0, 16)
+        display.text("Humidity: " + str(bme.values[2]), 0, 31)
+        display.text('Press: ' + str(bme.values[1]), 0, 46)
+        display.show()
+        utime.sleep(5)
+    
+_thread.start_new_thread(update_oled, ())
 
 
 # Listen for connections
