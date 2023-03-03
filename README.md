@@ -7,12 +7,16 @@
 A website hosted on a Raspberry Pi Pico W.
 
 
+## Notes
+- ``index.html`` is the HTML in a more editable state for the site in ``main.py``
+
+
 ## Branches
 ``master`` - Master branch compatible with the Pico W without any external hardware
 
 ``bme280`` - Code for the Pico with the BME280 module for altitude and temperature readings
 
-``oled`` - Code for the Pico with the BME280 and OLED module for altitude and temperature readings and displaying them on and oled display
+``oled`` - Code for the Pico with the BME280 and OLED module for altitude and temperature readings and displaying them on an oled display
 
 
 ## External Libraries

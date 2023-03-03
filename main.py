@@ -226,10 +226,32 @@ while True:
                 <center>
                     <p class='is-size-6' style='font-size: 24px; font-weight: 700; margin-bottom: 5px;'><i class='icon far fa-images'></i> Photos</p>
                     <div id='carouselExampleCaptions' class='carousel slide' data-bs-ride='carousel' style='max-width: 512px; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05);'>
-                        <img src='https://raw.githubusercontent.com/Tech1k/hellopico/master/pico-webserver.jpg' class='d-block w-100' alt='Pico W Webserver' style='max-width: 512px; height: 280px;'> 
-                        <div class='carousel-caption d-none d-md-block'>
-                            <p style='font-size: 16px; color: white;'>The Pico W that is hosting this website, taken on 2/16/2023.</p>
+                        <div class='carousel-indicators'>
+                            <button type='button' data-bs-target='#carouselExampleCaptions' data-bs-slide-to='0' class='active' aria-current='true' aria-label='Slide 1'></button>
+                            <button type='button' data-bs-target='#carouselExampleCaptions' data-bs-slide-to='1' aria-label='Slide 2'></button>
                         </div>
+                        <div class='carousel-inner'>
+                            <div class='carousel-item active'>
+                                <img src='https://raw.githubusercontent.com/Tech1k/hellopico/master/pico-webserver.jpg' class='d-block w-100' alt='Pico W Webserver' style='max-width: 512px; height: 280px;'>
+                                <div class='carousel-caption d-none d-md-block'>
+                                    <p style='font-size: 16px; color: black;'>The updated Pico W that is hosting this website, taken on 3/1/2023</p>
+                                </div>
+                            </div>
+                            <div class='carousel-item'>
+                                <img src='https://raw.githubusercontent.com/Tech1k/hellopico/master/pico-webserver-bme280.jpg' class='d-block w-100' alt='Pico W Webserver' style='max-width: 512px; height: 280px;'>
+                                <div class='carousel-caption '>
+                                    <p style='font-size: 16px; color: white;'>The Pico W that is hosting this website, taken on 2/16/2023</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class='carousel-control-prev' type='button' data-bs-target='#carouselExampleCaptions' data-bs-slide='prev'>
+                        <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                        <span class='visually-hidden'>Previous</span>
+                        </button>
+                        <button class='carousel-control-next' type='button' data-bs-target='#carouselExampleCaptions' data-bs-slide='next'>
+                        <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                        <span class='visually-hidden'>Next</span>
+                        </button>
                     </div>
                     <br/> 
                     <p class='is-size-6' style='font-size: 24px; font-weight: 700; margin-bottom: 5px;'><i class='icon far fa-newspaper'></i> Updates</p>
@@ -293,7 +315,7 @@ while True:
             cl.close()
         # If file not found, throw a 404 exception
         else:
-            cl.send('HHTTP/1.1 404 Not Found')
+            cl.send('HTTP/1.1 404 Not Found')
             cl.send('Content-Type: text/html\n')
             response = "404 Not Found"
             cl.sendall(response)
